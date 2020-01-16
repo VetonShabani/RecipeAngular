@@ -7,5 +7,5 @@ const recipeSchema = mongoose.Schema({
   imagePath: {type: String, required: false}
 });
 
-module.exports = mongoose.model('Recipes',recipeSchema);
+module.exports = mongoose.model('Recipe',recipeSchema);
 

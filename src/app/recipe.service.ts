@@ -10,13 +10,13 @@ import {Recipe} from './recipes/recipe.model';
 
 @Injectable({providedIn: 'root'})
 export class RecipeService {
-  private recipe: Recipe [] = [];
-  private recipeUpdated = new Subject<Recipe []>();
+  public recipe: Recipe [] = [];
+  public recipeUpdated = new Subject<Recipe[]>();
 
   constructor( private http: HttpClient) {
   }
   getPosts() {
-    this.http.get<{name: string, recipe: any}>('http://http://localhost:4200/recipe/api/posts')
+    this.http.get<{name: string, recipe: any}>('http://localhost:4200/recipe/api/posts')
       .pipe(map((recipeData) => {
         return recipeData.recipe.map(recipe => {
           return {
@@ -41,7 +41,7 @@ export class RecipeService {
 
   addRecipe(id:string, imagePath:string, name: string, description: string) {
     const recipe: Recipe = {id, description, imagePath, name};
-    this.http.post<{name: string, recipeId: string}>('http://http://localhost:4200/recipe/api/posts', recipe)
+    this.http.post<{name: string, description: string, recipeId: string}>('http://localhost:4200/recipe/api/posts', recipe)
       .subscribe(responseData => {
         const id = responseData.recipeId;
         recipe.id = id;
@@ -51,7 +51,7 @@ export class RecipeService {
   }
 
   deletePost(recipeId: string) {
-    this.http.delete('http://http://localhost:4200/recipe/api/posts' + recipeId)
+    this.http.delete('http://localhost:4200/recipe/api/posts' + recipeId)
       .subscribe( () => {
         const updatedRecipe = this.recipe.filter(recipe => recipe.id !== recipeId);
         this.recipe = updatedRecipe;

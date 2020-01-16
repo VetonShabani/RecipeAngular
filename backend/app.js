@@ -9,7 +9,7 @@ const Recipe = require('./models/recipe');
 // TBUqxPsRIPt3NdON - Atlas Cluster Password
 const app = express();
 
-mongoose.connect('mongodb+srv://Veton:TBUqxPsRIPt3NdON@cluster0-wgpzn.mongodb.net/node-angular?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://Veton:TBUqxPsRIPt3NdON@cluster0-wgpzn.mongodb.net/test?retryWrites=true&w=majority')
   .then( ()=>{
     console.log('Connect to database!')
   })
@@ -28,7 +28,7 @@ app.use((req,res,next)=>{
   next();
 });
 
-app.post("/api/posts",(req,res,next) =>{
+app.post("/recipe/api/posts",(req,res,next) =>{
   const recipe = new Recipe({
     name : req.body.name,
     description: req.body.description
@@ -42,7 +42,7 @@ app.post("/api/posts",(req,res,next) =>{
   });
 });
 
-app.get('/api/posts',(req,res,next)=> {
+app.get('/recipe-list',(req,res,next)=> {
 
   Recipe.find().then(documents => {
     res.status(200).json({
@@ -52,7 +52,7 @@ app.get('/api/posts',(req,res,next)=> {
   });
 });
 
-app.delete("/api/posts/:id",(req,res,next)=>{
+app.delete("/recipe-list:id",(req,res,next)=>{
   Recipe.deleteOne({_id: req.params.id}).then(result =>{
     console.log(result);
     res.status(200).json({message: 'Recipe deleted'});
